@@ -1,25 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
+import Tree from './views/DragAndDrop/index'
+import { DndProvider } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 import './App.css';
+import { Layout, Menu, Icon } from 'antd';
+const { Header, Content, Sider } = Layout;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <DndProvider backend={HTML5Backend}>
+      <Layout style={{ height: '100%' }}>
+        <Sider
+          breakpoint="lg"
+          collapsedWidth="0"
+          onBreakpoint={broken => {
+            console.log(broken);
+          }}
+          onCollapse={(collapsed, type) => {
+            console.log(collapsed, type);
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <div className="logo" />
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+            <Menu.Item key="1">
+              <Icon type="user" />
+              <span className="nav-text">跨树拖拽</span>
+            </Menu.Item>
+          </Menu>
+        </Sider>
+        <Layout>
+          <Header style={{ background: '#fff', padding: 0 }} />
+          <Content style={{ margin: '24px 16px 0', height: '100%' }}>
+            <div style={{ padding: 24, background: '#fff', height: '100%' }}>
+              <Tree />
+            </div>
+          </Content>
+        </Layout>
+      </Layout>
+    </DndProvider>
   );
 }
 
