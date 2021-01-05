@@ -1,12 +1,17 @@
+import 'core-js/stable'
+import 'regenerator-runtime/runtime'
 import React from 'react';
 import Tree from './views/DragAndDrop/index'
 import { DndProvider } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import './App.css';
-import { Layout, Menu, Icon } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { Layout, Menu } from 'antd';
 const { Header, Content, Sider } = Layout;
 
 function App() {
+  const a = [1,2];
+  console.log(a.flat());
   return (
     <DndProvider backend={HTML5Backend}>
       <Layout style={{ height: '100%' }}>
@@ -23,7 +28,7 @@ function App() {
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
             <Menu.Item key="1">
-              <Icon type="user" />
+              <UserOutlined />
               <span className="nav-text">跨树拖拽</span>
             </Menu.Item>
           </Menu>
