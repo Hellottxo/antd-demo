@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card, Tree, Table, message } from 'antd'
-import DraggableNode from '../../Components/DragAndDrop/DraggableNode'
-import DroppableNode from '../../Components/DragAndDrop/DroppableNode'
-import CustomDragLayer from '../../Components/DragAndDrop/CustomDragLayer'
+import DraggableNode from './DraggableNode'
+import DroppableNode from './DroppableNode'
+import CustomDragLayer from './CustomDragLayer'
 
 const { TreeNode } = Tree;
 

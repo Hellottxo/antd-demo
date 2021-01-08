@@ -2,15 +2,15 @@ module.exports = {
   presets: [
     ['@babel/preset-env',
       {
-        useBuiltIns: 'entry',
+        useBuiltIns: 'usage',
         modules: false,
-        corejs: {
-          version: 3,
-          proposals: true
-        },
+        corejs: { version: 3, proposals: true },
         targets: {
           chrome: 64
         }
-      }]
+      }],
+    '@babel/preset-typescript',
+    '@babel/preset-flow',
+    '@babel/preset-react'
   ]
 }
