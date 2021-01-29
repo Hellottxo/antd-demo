@@ -1,0 +1,41 @@
+.flex-table {
+  height: 100%;
+  overflow: hidden;
+}
+
+.filterWrap {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  width: 200px;
+  .inputWrap {
+    margin: 8px;
+  }
+  .btnWrap {
+    margin-top: 8px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .checkboxWrap {
+    max-height: 200px;
+    overflow: auto;
+    .checkboxGroup {
+      display: flex;
+      flex-direction: column;
+    }
+    .checkbox {
+      margin-left: 8px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      width: 168px;
+      .text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 150px;
+      }
+    }
+  }
+}
