@@ -88,31 +88,67 @@ const FlexTable = (props) => {
     ]);
 
   useEffect(() => {
-    window.addEventListener('resize', setScroll);
-    return () => {
-      window.removeEventListener('resize', setScroll);
-    };
-  }, [setScroll]);
-
-  useEffect(() => {
-    const target = document.body;
     let tableSize = {
       height: 0,
       width: 0
     };
-    const observer = new MutationObserver(() => {
-      // 针对页面其他div导致table大小变化特殊处理
-      setTimeout(() => {
-        if (tableRef && tableRef.current) {
-          const height = tableRef.current.clientHeight;
-          const width = tableRef.current.clientWidth;
-          if (tableSize.height !== height
-            || tableSize.width !== width) {
-            tableSize = { height, width };
-            setScroll();
-          }
+    let windowSize = {
+      height: window.innerHeight,
+      width: window.innerWidth
+    };
+
+    const isWindowResize = () => {
+      const { innerHeight, innerWidth } = window;
+      if (innerHeight !== windowSize.height || innerWidth !== window.innerWidth) {
+        windowSize = {
+          height: innerHeight,
+          width: innerWidth
+        };
+        return true;
+      }
+      return false;
+    };
+
+    const setRect = (width, height) => {
+      if (tableSize.height !== height || tableSize.width !== width) {
+        tableSize = { height, width };
+        setScroll(width, height);
+      }
+    };
+
+    const mutationObserverSetRect = () => {
+      if (tableRef && tableRef.current) {
+        const height = tableRef.current.clientHeight;
+        const width = tableRef.current.clientWidth;
+        setRect(width, height);
+      }
+    };
+
+    if (window.ResizeObserver) {
+      const resizeObserver = new ResizeObserver((entries) => {
+        const windowResizeFlag = isWindowResize();
+        const { width, height } = entries[0].contentRect;
+        if (windowResizeFlag) {
+          setRect(width, height);
+        } else {
+          setTimeout(() => setRect(width, height), 500);
         }
-      }, 450);
+      });
+      resizeObserver.observe(tableRef.current);
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }
+
+    // 使用MutationObserver模拟ResizeObserver
+    const target = document.body;
+    const observer = new MutationObserver(() => {
+      const windowResizeFlag = isWindowResize();
+      if (windowResizeFlag) {
+        mutationObserverSetRect();
+      } else {
+        setTimeout(mutationObserverSetRect, 450);
+      }
     });
     observer.observe(target, {
       attributes: true,

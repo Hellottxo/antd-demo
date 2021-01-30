@@ -35,6 +35,7 @@ const App = () => (
         <Sider
           breakpoint="lg"
           collapsedWidth="0"
+          collapsible
           onBreakpoint={broken => {
             console.log(broken);
           }}
